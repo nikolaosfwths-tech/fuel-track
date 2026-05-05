@@ -6,9 +6,9 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta name="apple-mobile-web-app-title" content="Fuel Track">
+<meta name="apple-mobile-web-app-title" content="International Rent A Car">
 <meta name="theme-color" content="#020617">
-<title>Fuel Track</title>
+<title>International Rent A Car</title>
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="icon" type="image/png" href="icon-192.png">
@@ -25,8 +25,8 @@ html{font-size:14px}
 body{background:var(--bg);color:var(--text);font-family:'Courier New',monospace;min-height:100vh}
 .hdr{background:#0a0f1e;border-bottom:1px solid var(--border);padding:16px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
 .hdr-left{display:flex;align-items:center;gap:10px}
-.logo-title{font-size:1.3rem;font-weight:900;letter-spacing:2px}
-.logo-sub{font-size:0.65rem;color:#334155;letter-spacing:2px;margin-top:2px}
+.logo-title{font-size:1.1rem;font-weight:900;letter-spacing:1px;color:#ef4444;text-shadow:0 0 20px rgba(239,68,68,0.4)}
+.logo-sub{font-size:0.65rem;color:#64748b;letter-spacing:2px;margin-top:2px}
 .body{padding:16px;max-width:560px;margin:0 auto}
 .btn{background:linear-gradient(135deg,var(--blue),var(--blue-dark));border:none;border-radius:14px;color:#fff;font-family:'Courier New',monospace;font-weight:700;font-size:1.1rem;padding:16px 20px;cursor:pointer;letter-spacing:1px;display:inline-block;text-align:center;-webkit-appearance:none}
 .btn:active{opacity:.8}
@@ -49,13 +49,13 @@ body{background:var(--bg);color:var(--text);font-family:'Courier New',monospace;
 .inp-date:focus{outline:none;border-color:var(--blue)}
 .inp-pass{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:14px;color:var(--text);font-family:'Courier New',monospace;font-size:1.1rem;-webkit-appearance:none}
 .inp-pass:focus{outline:none;border-color:var(--blue)}
-.lbl{font-size:0.8rem;color:var(--dim);letter-spacing:1px;margin-bottom:6px;text-transform:uppercase}
+.lbl{font-size:0.85rem;color:#94a3b8;letter-spacing:1px;margin-bottom:6px;text-transform:uppercase;font-weight:700}
 .field{margin-bottom:16px}
-.sec{font-size:0.8rem;color:var(--border2);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;border-bottom:1px solid #0f172a;padding-bottom:6px}
+.sec{font-size:0.85rem;color:#e2e8f0;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;border-bottom:1px solid #1e293b;padding-bottom:6px;font-weight:900}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
 .stat{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px;text-align:center}
 .stat-num{font-size:2rem;font-weight:900}
-.stat-lbl{font-size:0.7rem;color:var(--muted);letter-spacing:1px;margin-top:3px}
+.stat-lbl{font-size:0.75rem;color:#e2e8f0;letter-spacing:1px;margin-top:3px;font-weight:700}
 .thumbs{display:flex;align-items:center;gap:10px;margin-top:10px}
 .thumb{width:72px;height:72px;border-radius:10px;object-fit:cover;flex-shrink:0}
 .thumb-empty{width:72px;height:72px;border-radius:10px;flex-shrink:0;background:var(--bg);border:2px dashed var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}
@@ -67,8 +67,8 @@ body{background:var(--bg);color:var(--text);font-family:'Courier New',monospace;
 .photo-slot-empty{aspect-ratio:1;background:var(--surface);border-radius:10px;border:2px dashed var(--border);display:flex;align-items:center;justify-content:center;color:var(--border2);font-size:0.8rem}
 .date-row{display:flex;gap:16px;margin-top:10px;flex-wrap:wrap}
 .date-item{display:flex;flex-direction:column;gap:2px}
-.date-item-label{font-size:0.7rem;color:var(--dim);letter-spacing:1px;text-transform:uppercase}
-.date-item-val{font-size:1rem;color:var(--muted);font-weight:700}
+.date-item-label{font-size:0.75rem;color:#94a3b8;letter-spacing:1px;text-transform:uppercase;font-weight:700}
+.date-item-val{font-size:1rem;color:#e2e8f0;font-weight:900}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .empty{text-align:center;padding:60px 20px}
 .empty-icon{font-size:3.5rem;margin-bottom:12px}
@@ -128,6 +128,7 @@ let newDepPhoto = null;
 let retPhoto    = null;
 let browseDate  = todayISO();
 let synced      = false;
+let adminFilter = 'all'; // 'all' or office username
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 function todayISO() { return new Date().toISOString().slice(0,10); }
@@ -262,9 +263,9 @@ function render() {
 
 // ── LOGIN ──────────────────────────────────────────────────────────────────────
 function renderLogin() {
-  return '<div class="hdr"><div class="hdr-left"><span style="font-size:1.6rem">⛽</span><div><div class="logo-title">FUEL TRACK</div><div class="logo-sub">ΣΥΝΔΕΣΗ</div></div></div></div>'
+  return '<div class="hdr"><div class="hdr-left"><span style="font-size:1.6rem">⛽</span><div><div class="logo-title">INTERNATIONAL RENT A CAR</div><div class="logo-sub">ΣΥΝΔΕΣΗ</div></div></div></div>'
     +'<div class="body" style="max-width:360px">'
-    +'<div style="text-align:center;padding:30px 0 24px"><span style="font-size:3rem">⛽</span><div style="font-size:1.4rem;font-weight:900;margin-top:10px;letter-spacing:2px">FUEL TRACK</div></div>'
+    +'<div style="text-align:center;padding:30px 0 24px"><span style="font-size:3rem">⛽</span><div style="font-size:1.4rem;font-weight:900;margin-top:10px;letter-spacing:2px">INTERNATIONAL RENT A CAR</div></div>'
     +'<div class="field"><div class="lbl">Username</div><input class="inp" id="login-user" placeholder="admin" autocomplete="off" autocorrect="off" spellcheck="false" style="font-size:1.1rem;font-weight:400;letter-spacing:1px"></div>'
     +'<div class="field"><div class="lbl">Password</div><input class="inp-pass" type="password" id="login-pass" placeholder="••••••••"></div>'
     +'<div id="login-err" style="color:#f87171;font-size:0.8rem;margin-bottom:12px;display:none">Λάθος username ή password</div>'
@@ -293,8 +294,9 @@ function bindLogin() {
 // ── LIST ───────────────────────────────────────────────────────────────────────
 function getRentals() {
   return Object.values(rentals).filter(function(r){
-    if (currentUser.role === 'admin') return true;
-    return r.office === currentUser.username;
+    if (currentUser.role !== 'admin') return r.office === currentUser.username;
+    if (adminFilter === 'all') return true;
+    return r.office === adminFilter;
   });
 }
 
@@ -309,7 +311,7 @@ function renderList() {
 
   var isAdmin = currentUser.role === 'admin';
 
-  var html = '<div class="hdr"><div class="hdr-left"><span style="font-size:1.4rem">⛽</span><div><div class="logo-title">FUEL TRACK</div>'
+  var html = '<div class="hdr"><div class="hdr-left"><span style="font-size:1.4rem">⛽</span><div><div class="logo-title">INTERNATIONAL RENT A CAR</div>'
     +'<div class="logo-sub" style="display:flex;align-items:center">'
     +officeLabel(currentUser.username)
     +'<span class="sync-dot '+(synced?'sync-ok':'sync-off')+'"></span>'
@@ -322,7 +324,7 @@ function renderList() {
     +'</div></div>'
     +'<div class="body">';
 
-  // Stats
+  // Admin stats + filter
   if (isAdmin) {
     var byOffice = {};
     Object.values(rentals).forEach(function(r){
@@ -336,6 +338,16 @@ function renderList() {
         +'<div style="font-size:1.6rem;font-weight:900;color:#60a5fa">'+(byOffice[k]||0)+'</div>'
         +'<div style="font-size:0.65rem;color:#475569">ΕΝΕΡΓΕΣ</div>'
         +'</div>';
+    });
+    html += '</div>';
+
+    // Filter buttons
+    html += '<div class="sec">ΦΙΛΤΡΟ ΓΡΑΦΕΙΟΥ</div>';
+    html += '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px">';
+    html += '<button data-filter="all" class="filter-btn" style="background:'+(adminFilter==='all'?'#0ea5e9':'#0f172a')+';border:1px solid '+(adminFilter==='all'?'#0ea5e9':'#1e293b')+';border-radius:10px;color:'+(adminFilter==='all'?'#fff':'#94a3b8')+';font-family:Courier New,monospace;font-size:0.75rem;font-weight:700;padding:8px 14px;cursor:pointer">ΟΛΕΣ</button>';
+    ['mikripoli','lagas','portobello','belvedere','lakitira'].forEach(function(k){
+      var active = adminFilter === k;
+      html += '<button data-filter="'+k+'" class="filter-btn" style="background:'+(active?'#0ea5e9':'#0f172a')+';border:1px solid '+(active?'#0ea5e9':'#1e293b')+';border-radius:10px;color:'+(active?'#fff':'#94a3b8')+';font-family:Courier New,monospace;font-size:0.75rem;font-weight:700;padding:8px 14px;cursor:pointer">'+officeLabel(k)+'</button>';
     });
     html += '</div>';
   } else {
@@ -411,6 +423,10 @@ function bindList() {
   };
   document.getElementById('btn-prev-day').onclick = function() { browseDate = addDays(browseDate,-1); render(); };
   document.getElementById('btn-next-day').onclick = function() { browseDate = addDays(browseDate, 1); render(); };
+
+  document.querySelectorAll('.filter-btn').forEach(function(btn) {
+    btn.onclick = function() { adminFilter = btn.dataset.filter; render(); };
+  });
 
   var btnSound = document.getElementById('btn-sound');
   if (btnSound) btnSound.onclick = function() {
