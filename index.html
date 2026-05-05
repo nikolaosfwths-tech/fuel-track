@@ -21,7 +21,7 @@
   --red:#f87171; --red-dim:#7f1d1d;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html{font-size:12px}
+html{font-size:14px}
 body{background:var(--bg);color:var(--text);font-family:'Courier New',monospace;min-height:100vh}
 .hdr{background:#0a0f1e;border-bottom:1px solid var(--border);padding:16px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
 .hdr-left{display:flex;align-items:center;gap:10px}
@@ -111,12 +111,12 @@ const db = getDatabase(firebaseApp);
 
 // ── Accounts ──────────────────────────────────────────────────────────────────
 const ACCOUNTS = {
-  'admin':    { pass: 'admin123',   role: 'admin',  label: 'Κεντρικό',  color: 'office-1' },
-  'grafio1':  { pass: 'grafio1pass', role: 'office', label: 'Γραφείο 1', color: 'office-1' },
-  'grafio2':  { pass: 'grafio2pass', role: 'office', label: 'Γραφείο 2', color: 'office-2' },
-  'grafio3':  { pass: 'grafio3pass', role: 'office', label: 'Γραφείο 3', color: 'office-3' },
-  'grafio4':  { pass: 'grafio4pass', role: 'office', label: 'Γραφείο 4', color: 'office-4' },
-  'grafio5':  { pass: 'grafio5pass', role: 'office', label: 'Γραφείο 5', color: 'office-5' },
+  'admin':      { pass: 'admin123', role: 'admin',  label: 'Κεντρικό',    color: 'office-1' },
+  'mikripoli':  { pass: '1234',     role: 'office', label: 'MIKRI POLI',  color: 'office-1' },
+  'lagas':      { pass: '1234',     role: 'office', label: 'LAGAS',       color: 'office-2' },
+  'portobello': { pass: '1234',     role: 'office', label: 'PORTO BELLO', color: 'office-3' },
+  'belvedere':  { pass: '1234',     role: 'office', label: 'BELVEDERE',   color: 'office-4' },
+  'lakitira':   { pass: '1234',     role: 'office', label: 'LAKITIRA',    color: 'office-5' },
 };
 
 // ── State ──────────────────────────────────────────────────────────────────────
@@ -156,10 +156,10 @@ function compressImage(dataUrl, callback) {
   var img = new Image();
   img.onload = function() {
     var canvas = document.createElement('canvas');
-    var maxW = 700, scale = img.width > maxW ? maxW/img.width : 1;
+    var maxW = 900, scale = img.width > maxW ? maxW/img.width : 1;
     canvas.width = img.width*scale; canvas.height = img.height*scale;
     canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);
-    callback(canvas.toDataURL('image/jpeg',0.55));
+    callback(canvas.toDataURL('image/jpeg',0.75));
   };
   img.src = dataUrl;
 }
@@ -318,7 +318,7 @@ function renderList() {
     +(isAdmin
       ? '<button id="btn-sound" title="Ειδοποιήσεις" style="background:'+(soundEnabled?'#0ea5e9':'#0f172a')+';border:1px solid '+(soundEnabled?'#0ea5e9':'#1e293b')+';border-radius:10px;color:'+(soundEnabled?'#fff':'#64748b')+';font-size:1rem;padding:10px 14px;cursor:pointer">🔔</button>'
       : '<button class="btn" id="btn-new">+ ΝΕΑ</button>')
-    +'<button class="btn-ghost" id="btn-logout" style="padding:10px 14px;font-size:0.8rem">↩</button>'
+    +'<button class="btn-ghost" id="btn-logout" style="padding:10px 14px;font-size:0.75rem">LOGOUT</button>'
     +'</div></div>'
     +'<div class="body">';
 
@@ -330,7 +330,7 @@ function renderList() {
     });
     html += '<div class="sec">ΕΝΕΡΓΕΣ ΑΝΑ ΓΡΑΦΕΙΟ</div>';
     html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px">';
-    ['grafio1','grafio2','grafio3','grafio4','grafio5'].forEach(function(k){
+    ['mikripoli','lagas','portobello','belvedere','lakitira'].forEach(function(k){
       html += '<div class="card" style="padding:12px;text-align:center">'
         +'<div class="badge '+officeColor(k)+'" style="margin-bottom:6px">'+officeLabel(k)+'</div>'
         +'<div style="font-size:1.6rem;font-weight:900;color:#60a5fa">'+(byOffice[k]||0)+'</div>'
